@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:name", async (req, res, next) => {
-  const tag = await tagModel.findOne({ name: req.params.name.toLowerCase() });
+  const tag = await tagModel.findOne({ name: req.params.name });
   const blogs = await blogModel
     .find({ tags: tag })
     .populate("tags", "_id name")
