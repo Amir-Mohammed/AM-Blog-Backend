@@ -32,10 +32,6 @@ router.get("/:name", async (req, res, next) => {
     .populate("postedBy", "_id username")
     .select("_id title image excerpt tags postedBy createdAt updatedAt")
     .exec();
-
-  if (!blogs.length) {
-    return next(createError(404, "There is no blogs with such tag"));
-  }
   res.send({ blogs, tag });
 });
 
