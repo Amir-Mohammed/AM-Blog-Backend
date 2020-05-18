@@ -32,7 +32,7 @@ router.post(
       <p>Message: ${message}</p>
       <hr />
       <p>This email may contain sensitive information</p>
-      <a>http://Blogger.com</a>
+      <a>https://bit.ly/Js-Blog</a>
     `,
     };
 
@@ -66,7 +66,7 @@ router.post(
       <p>Message: ${message}</p>
       <hr />
       <p>This email may contain sensitive information</p>
-      <a>http://Blogger.com</a>
+      <a>bit.ly/Js-Blog</a>
     `,
     };
 
