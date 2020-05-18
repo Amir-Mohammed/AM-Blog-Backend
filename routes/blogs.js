@@ -7,6 +7,7 @@ const createError = require("http-errors");
 const { check } = require("express-validator");
 const validateRequest = require("../middleware/validateRequest");
 const excerpts = require("excerpts");
+var cloudinary = require("cloudinary").v2;
 
 //Create new blog
 router.post(
@@ -21,7 +22,10 @@ router.post(
   async (req, res, next) => {
     if (!req.file) throw createError(422, "Blog Image is required");
     const path = req.file.path.replace("public\\", "");
-    req.body.image = path;
+    const image = await cloudinary.uploader.upload(path, {
+      tags: "express_sample",
+    });
+    req.body.image = image.secure_url;
     req.body.excerpt = excerpts(req.body.body, { words: 40 });
     req.body.tags = req.body.tags.split(",");
     const blog = new blogModel({ ...req.body, postedBy: req.user._id });
@@ -100,7 +104,10 @@ router.put(
       return next(createError(400, "Invalid updates fields"));
     if (!req.file) throw createError(422, "Blog Image is required");
     const path = req.file.path.replace("public\\", "");
-    req.body.image = path;
+    const image = await cloudinary.uploader.upload(path, {
+      tags: "express_sample",
+    });
+    req.body.image = image.secure_url;
     req.body.excerpt = excerpts(req.body.body, { words: 40 });
     req.body.tags = req.body.tags.split(",");
 

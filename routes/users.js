@@ -127,7 +127,10 @@ router.patch(
   async (req, res, next) => {
     if (req.file) {
       const path = req.file.path.replace("public\\", "");
-      req.body.image = path;
+      const image = await cloudinary.uploader.upload(path, {
+        tags: "express_sample",
+      });
+      req.body.image = image.secure_url;
     }
     if (!req.file && req.body.image) {
       return next(createError(400, "Please upload an image"));
