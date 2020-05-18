@@ -38,7 +38,7 @@ router.post(
       .upload(path, { tags: "express_sample" })
       .then(function (image) {
         console.log("** file uploaded to Cloudinary service");
-        console.dir(image);
+        console.log(image, `Image url: ${image.secure_url}`);
         req.body.image = image.secure_url;
       });
     // req.body.image = path;
