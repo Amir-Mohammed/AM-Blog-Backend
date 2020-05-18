@@ -117,8 +117,8 @@ router.patch(
     check("username").optional().isLength({ min: 3, max: 50 }),
     check("about")
       .optional()
-      .isLength({ min: 10, max: 100 })
-      .withMessage("about must be between 10 to 100 characters long"),
+      .isLength({ min: 10, max: 200 })
+      .withMessage("about must be between 10 to 200 characters long"),
     check("email")
       .optional()
       .isEmail()

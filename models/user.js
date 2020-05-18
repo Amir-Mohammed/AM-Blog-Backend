@@ -31,7 +31,7 @@ const schema = new mongoose.Schema(
       type: String,
       trim: true,
       minlength: 10,
-      maxlength: 100,
+      maxlength: 200,
     },
     tokens: [
       {
