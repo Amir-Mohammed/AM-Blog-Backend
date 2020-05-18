@@ -6,6 +6,7 @@ const { check } = require("express-validator");
 const userModel = require("../models/user");
 const fileUpload = require("../middleware/file-upload");
 const createError = require("http-errors");
+var cloudinary = require("cloudinary").v2;
 
 //Register a user with the following required attributes Username, password, firstName
 router.post(
@@ -33,7 +34,14 @@ router.post(
   async (req, res) => {
     if (!req.file) throw createError(422, "Profile Image is required");
     const path = req.file.path.replace("public\\", "");
-    req.body.image = path;
+    cloudinary.uploader
+      .upload(path, { tags: "express_sample" })
+      .then(function (image) {
+        console.log("** file uploaded to Cloudinary service");
+        console.dir(image);
+        req.body.image = image;
+      });
+    // req.body.image = path;
     const user = new userModel(req.body);
     await user.save();
     const token = await user.generateAuthToken();
