@@ -37,13 +37,10 @@ router.post(
     cloudinary.uploader
       .upload(path, { tags: "express_sample" })
       .then(function (image) {
-        console.log("** file uploaded to Cloudinary service");
-        console.log(image, `Image url: ${image.secure_url}`);
         req.body.image = image.secure_url;
-      });
-    // req.body.image = path;
-    const user = new userModel(req.body);
-    await user.save();
+        const user = new userModel(req.body);
+        await user.save();
+      });    
     const token = await user.generateAuthToken();
     user.tokens.push({ token });
     res
