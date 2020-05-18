@@ -36,11 +36,11 @@ router.post(
     const path = req.file.path.replace("public\\", "");
     cloudinary.uploader
       .upload(path, { tags: "express_sample" })
-      .then(function (image) {
+      .then(async (image) => {
         req.body.image = image.secure_url;
         const user = new userModel(req.body);
         await user.save();
-      });    
+      });
     const token = await user.generateAuthToken();
     user.tokens.push({ token });
     res
