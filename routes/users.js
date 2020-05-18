@@ -34,13 +34,12 @@ router.post(
   async (req, res) => {
     if (!req.file) throw createError(422, "Profile Image is required");
     const path = req.file.path.replace("public\\", "");
-    cloudinary.uploader
-      .upload(path, { tags: "express_sample" })
-      .then(async (image) => {
-        req.body.image = image.secure_url;
-        const user = new userModel(req.body);
-        await user.save();
-      });
+    const image = await cloudinary.uploader.upload(path, {
+      tags: "express_sample",
+    });
+    req.body.image = image.secure_url;
+    const user = new userModel(req.body);
+    await user.save();
     const token = await user.generateAuthToken();
     user.tokens.push({ token });
     res
