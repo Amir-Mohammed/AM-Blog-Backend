@@ -39,7 +39,7 @@ router.post(
       .then(function (image) {
         console.log("** file uploaded to Cloudinary service");
         console.dir(image);
-        req.body.image = image;
+        req.body.image = image.secure_url;
       });
     // req.body.image = path;
     const user = new userModel(req.body);
